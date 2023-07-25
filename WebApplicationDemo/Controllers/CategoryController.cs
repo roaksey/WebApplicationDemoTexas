@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApplicationDemo.Data;
+using WebApplicationDemo.Models;
 
 namespace WebApplicationDemo.Controllers
 {
@@ -15,5 +16,15 @@ namespace WebApplicationDemo.Controllers
             var categories = _db.Categories.ToList();
             return View(categories);
         }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Category model)
+        {
+            return View();
+        }
+        
     }
 }
