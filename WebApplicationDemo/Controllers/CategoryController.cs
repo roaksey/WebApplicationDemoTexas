@@ -30,12 +30,20 @@ namespace WebApplicationDemo.Controllers
         [HttpPost]
         public IActionResult Create(Category model)
         {
+            if (model.Name.ToLower() == model.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("name", "Display Name cannot be equal to model name.");
+                TempData["error"] = "Model is not valid";                
+            }
             if (ModelState.IsValid)
             {
                 _db.Categories.Add(model);
                 _db.SaveChanges();
+                TempData["success"] = "Category created successfully.";
                 return RedirectToAction("Index");
             }
+          
+            
             return View(model);
         }
 
@@ -56,6 +64,7 @@ namespace WebApplicationDemo.Controllers
             {
                 _db.Update(category);
                 _db.SaveChanges();
+                TempData["success"] = "Category updated successfully.";
                 return RedirectToAction("Index");
             }
             return View(category);  
@@ -79,6 +88,7 @@ namespace WebApplicationDemo.Controllers
             }
             _db.Categories.Remove(category);
             _db.SaveChanges();
+            TempData["success"] = "Category deleted successfully.";
             return RedirectToAction("Index");
         }
 
